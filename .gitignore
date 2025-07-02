@@ -1,0 +1,57 @@
+# Node modules (never commit this)
+node_modules/
+
+# Build output (Vite or CRA)
+dist/
+build/
+
+# Optional logs and debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Local environment variables
+.env
+.env.*.local
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# Editor-specific
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Local testing
+coverage/
+*.lcov
+
+# Misc
+*.log
+*.tsbuildinfo
+
+# macOS Finder settings
+.AppleDouble
+.LSOverride
+
+# Windows thumbnail cache
+ehthumbs.db
+Desktop.ini
+
+# Linux Trash folder
+.Trash-*
+
+# Vite cache
+.vite/
+
+# Tailwind CSS cache
+.tailwind/
+
+# ESLint cache
+.eslintcache
+
+# Storybook static build (if used)
+storybook-static/
