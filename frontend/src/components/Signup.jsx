@@ -30,8 +30,7 @@ const Signup = () => {
     if (form.role === "Mentee") {
       navigate("/mentee-dashboard");
     } else if (form.role === "Mentor") {
-      // You can add mentor dashboard navigation here in the future
-      alert("Mentor dashboard not implemented yet!");
+      navigate("/mentor-dashboard");
     }
   };
 
