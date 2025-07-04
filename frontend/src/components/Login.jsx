@@ -28,7 +28,7 @@ const Login = () => {
       if (res.data.user.role === "Mentee") {
         navigate("/mentee-dashboard");
       } else if (res.data.user.role === "Mentor") {
-        alert("Mentor dashboard not implemented yet!");
+        navigate("/mentor-dashboard");
       }
     } catch (err) {
       setError(err.response?.data?.message || "Login failed");

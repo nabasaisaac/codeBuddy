@@ -20,13 +20,18 @@ select * from users;
 DESC users;
 CREATE TABLE IF NOT EXISTS mentorship_requests (
     request_id INT PRIMARY KEY AUTO_INCREMENT,
-    user_id INT,
+    mentee_id INT,
     mentor_id INT,
+    description TEXT,
     status ENUM('pending', 'accepted', 'rejected') DEFAULT 'pending',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (mentee_id) REFERENCES mentee(mentee_id) ON DELETE CASCADE,
-    FOREIGN KEY (mentor_id) REFERENCES mentor(mentor_id) ON DELETE CASCADE
+    FOREIGN KEY (mentee_id) REFERENCES users(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (mentor_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
+use codeBuddy;
+DROP TABLE mentorship_requests;
+
+SELECT * FROM mentorship_requests;
 
 
