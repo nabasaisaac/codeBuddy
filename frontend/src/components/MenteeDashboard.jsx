@@ -33,6 +33,7 @@ const menteeProfile = {
 
 const MenteeDashboard = () => {
   const [search, setSearch] = useState("");
+  const [requestedMentors, setRequestedMentors] = useState([]);
   const { user } = useUser();
   const degree = user.degree;
   const mentors = mentorsData[degree] || [];
@@ -46,6 +47,13 @@ const MenteeDashboard = () => {
   const handleLogout = () => {
     // TODO: Add logout logic
     navigate("/login");
+  };
+
+  const handleRequestMentorship = (mentorName) => {
+    // ✅ Prevent duplicates
+    if (!requestedMentors.includes(mentorName)) {
+      setRequestedMentors([...requestedMentors, mentorName]);
+    }
   };
 
   return (
