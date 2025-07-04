@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useUser } from "../context/UserContext";
 
 const Login = () => {
   const [form, setForm] = useState({
@@ -6,14 +8,45 @@ const Login = () => {
     password: "",
   });
 
+  const navigate = useNavigate();
+  const { setUser } = useUser();
+
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // TODO: Add your login logic here (API call, validation, etc.)
-    console.log(form);
+
+    // Simulated users — you can replace this with backend API logic
+    const dummyUsers = [
+      {
+        name: "John Doe",
+        email: "john.doe@gmail.com",
+        degree: "BSCS",
+        role: "Mentee",
+      },
+      {
+        name: "Alice Mentor",
+        email: "alice.mentor@gmail.com",
+        degree: "BSIT",
+        role: "Mentor",
+      },
+    ];
+
+    const matchedUser = dummyUsers.find((user) => user.email === form.email);
+
+    if (matchedUser) {
+      setUser(matchedUser);
+
+      if (matchedUser.role === "Mentee") {
+        navigate("/mentee-dashboard");
+      } else {
+        navigate("/mentor-dashboard");
+      }
+    } else {
+      alert("Invalid credentials — try using a dummy email from the list.");
+    }
   };
 
   return (
@@ -71,4 +104,4 @@ const Login = () => {
   );
 };
 
-export default Login; 
+export default Login;
