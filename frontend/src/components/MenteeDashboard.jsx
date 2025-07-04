@@ -1,58 +1,57 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../context/UserContext";
-
-// Dummy data for mentors
-const mentorsData = {
-  BSIT: [
-    { name: "Alice Johnson", field: "Network Security", experience: "5 years" },
-    { name: "Bob Smith", field: "Cloud Computing", experience: "3 years" },
-    { name: "Charlie Davis", field: "Web Development", experience: "2 years" },
-    { name: "Diana Green", field: "Hardware Maintenance", experience: "2 years" },
-  ],
-  BSDS: [
-    { name: "Carol White", field: "Machine Learning", experience: "1 years" },
-    { name: "David Brown", field: "Big Data Analytics", experience: "2years" },
-    { name: "Eve Black", field: "Data Science", experience: "1 years" },
-    { name: "Frank Green", field: "Data Mining", experience: "2 years" },
-  ],
-  BSCS: [
-    { name: "Eve Black", field: "Software Engineering", experience: "1 years" },
-    { name: "Frank Green", field: "Algorithms", experience: "2 years" },
-    { name: "Grace White", field: "Cybersecurity", experience: "2 years" },
-    { name: "Henry Blue", field: "Embedded Systems", experience: "2 years" },
-  ],
-};
+import api from "../api";
 
 const MenteeDashboard = () => {
   const [search, setSearch] = useState("");
-  const [requestedMentors, setRequestedMentors] = useState([]);
-  const { user } = useUser();
-  const degree = user.degree;
+  const [mentors, setMentors] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const { user, logout } = useUser();
   const navigate = useNavigate();
 
-  const mentors = mentorsData[degree] || [];
-
-  const filteredMentors = mentors.filter((mentor) =>
-    mentor.field.toLowerCase().includes(search.toLowerCase())
-  );
+  useEffect(() => {
+    if (!user) return;
+    const fetchMentors = async () => {
+      setLoading(true);
+      setError("");
+      try {
+        const res = await api.get("/mentors", {
+          params: { degree: user.degree, search },
+        });
+        setMentors(res.data);
+      } catch (err) {
+        setError("Failed to load mentors");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchMentors();
+  }, [user, search]);
 
   const handleLogout = () => {
+    logout();
     navigate("/login");
   };
 
-  const handleRequestMentorship = (mentorName) => {
-    if (!requestedMentors.includes(mentorName)) {
-      setRequestedMentors([...requestedMentors, mentorName]);
+  const handleRequest = async (mentorId) => {
+    try {
+      await api.post("/mentors/request", { mentorId });
+      alert("Mentorship request sent!");
+    } catch (err) {
+      alert("Failed to send request");
     }
   };
+
+  if (!user) return null;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-200 flex flex-col">
       {/* Top bar */}
       <div className="flex justify-between items-center p-6 bg-white shadow-md">
         <h1 className="text-2xl md:text-3xl font-bold text-blue-700">
-          Mentee Dashboard
+          Mentee dashboard
         </h1>
         <div className="flex items-center gap-4">
           <div className="text-right">
@@ -60,7 +59,10 @@ const MenteeDashboard = () => {
             <div className="text-sm text-gray-500">{user.degree}</div>
           </div>
           <img
-            src={`https://ui-avatars.com/api/?name=${user.name.replace(" ", "+")}&background=4f8cff&color=fff`}
+            src={`https://ui-avatars.com/api/?name=${user.name.replace(
+              " ",
+              "+"
+            )}&background=4f8cff&color=fff`}
             alt="Profile"
             className="w-12 h-12 rounded-full border-2 border-blue-400"
           />
@@ -91,31 +93,36 @@ const MenteeDashboard = () => {
         {/* Suggested mentors */}
         <div>
           <h2 className="text-xl font-semibold text-gray-700 mb-4">
-            Suggested Mentors in{" "}
-            {degree === "BSIT"
-              ? "Information Technology"
-              : degree === "BSDS"
-              ? "Data Science"
-              : "Computer Science"}
+            Suggested Mentors in {user.degree}
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {filteredMentors.length > 0 ? (
-              filteredMentors.map((mentor, idx) => {
-                const requested = requestedMentors.includes(mentor.name);
-                return (
+          {loading ? (
+            <div>Loading mentors...</div>
+          ) : error ? (
+            <div className="text-red-500">{error}</div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {mentors.length > 0 ? (
+                mentors.map((mentor) => (
                   <div
-                    key={idx}
+                    key={mentor.mentor_id}
                     className="bg-white rounded-xl shadow-lg p-6 flex flex-col gap-2 border-t-4 border-blue-400"
                   >
                     <div className="flex items-center gap-3">
                       <img
-                        src={`https://ui-avatars.com/api/?name=${mentor.name.replace(" ", "+")}&background=2563eb&color=fff`}
+                        src={`https://ui-avatars.com/api/?name=${mentor.name.replace(
+                          " ",
+                          "+"
+                        )}&background=2563eb&color=fff`}
                         alt={mentor.name}
                         className="w-12 h-12 rounded-full"
                       />
                       <div>
-                        <div className="font-bold text-lg text-blue-700">{mentor.name}</div>
-                        <div className="text-gray-500 text-sm">{mentor.field}</div>
+                        <div className="font-bold text-lg text-blue-700">
+                          {mentor.name}
+                        </div>
+                        <div className="text-gray-500 text-sm">
+                          {mentor.field}
+                        </div>
                       </div>
                     </div>
                     <div className="text-gray-600 mt-2">
@@ -123,25 +130,20 @@ const MenteeDashboard = () => {
                       <span className="font-medium">{mentor.experience}</span>
                     </div>
                     <button
-                      className={`mt-4 px-4 py-2 rounded-lg font-semibold transition ${
-                        requested
-                          ? "bg-green-500 text-white cursor-not-allowed"
-                          : "bg-blue-600 hover:bg-blue-700 text-white"
-                      }`}
-                      disabled={requested}
-                      onClick={() => handleRequestMentorship(mentor.name)}
+                      className="mt-4 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold transition"
+                      onClick={() => handleRequest(mentor.mentor_id)}
                     >
-                      {requested ? "Request Sent" : "Request Mentorship"}
+                      Request Mentorship
                     </button>
                   </div>
-                );
-              })
-            ) : (
-              <div className="text-gray-500 col-span-2">
-                No mentors found for your search.
-              </div>
-            )}
-          </div>
+                ))
+              ) : (
+                <div className="text-gray-500 col-span-2">
+                  No mentors found for your search.
+                </div>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </div>
