@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import Signup from "./components/Signup"; // Adjust the path if your structure is differenimport { useState } from 'react'
+import Signup from "./components/Signup"; 
 import Login from "./components/Login";
 import { Link } from "react-router-dom";
 import MenteeDashboard from "./components/MenteeDashboard";
