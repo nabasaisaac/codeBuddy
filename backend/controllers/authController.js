@@ -18,6 +18,7 @@ export async function signup(req, res) {
     });
     res.json({ user: { id: user_id, name, email, degree, role }, token });
   } catch (err) {
+    console.log(err.message);
     res.status(500).json({ message: "Signup failed", error: err.message });
   }
 }
