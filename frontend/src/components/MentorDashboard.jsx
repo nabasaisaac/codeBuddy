@@ -47,7 +47,7 @@ const MentorDashboard = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-200 flex flex-col">
-      {/* Top bar */}
+      {/*  The Top bar */}
       <div className="flex justify-between items-center p-6 bg-white shadow-md">
         <h1 className="text-2xl md:text-3xl font-bold text-blue-700">
           Mentor Dashboard
