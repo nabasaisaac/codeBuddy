@@ -47,7 +47,7 @@ const MentorDashboard = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-200 flex flex-col">
-      {/* Top bar */}
+      {/*  The Top bar */}
       <div className="flex justify-between items-center p-6 bg-white shadow-md">
         <h1 className="text-2xl md:text-3xl font-bold text-blue-700">
           Mentor Dashboard
@@ -74,9 +74,9 @@ const MentorDashboard = () => {
         </div>
       </div>
 
-      {/* Main content */}
+      {/* The main content */}
       <div className="flex-1 p-6 flex flex-col md:flex-row max-w-6xl mx-auto w-full">
-        {/*  The recent Activities Sidebar */}
+        {/*  The recent activities Sidebar */}
         <div className="md:w-1/3 md:mr-8 mb-8 md:mb-0">
           <h3 className="text-lg font-semibold mb-4">Recent Activities</h3>
           <div className="space-y-4">
@@ -114,7 +114,7 @@ const MentorDashboard = () => {
             )}
           </div>
         </div>
-        {/* Main content ... */}
+        {/* The Main content ... */}
         <div className="flex-1 flex flex-col">
           <h2 className="text-xl font-semibold text-gray-700 mb-4">
             Mentee Requests
