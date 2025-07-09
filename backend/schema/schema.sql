@@ -30,8 +30,9 @@ CREATE TABLE IF NOT EXISTS mentorship_requests (
 );
 
 use codeBuddy;
+SELECT * FROM mentorship_requests WHERE mentor_id = ? order BY created_at ASC
 DROP TABLE mentorship_requests;
 
-SELECT * FROM mentorship_requests;
+SELECT * FROM mentorship_requests WHERE mentor_id=5 ORDER BY created_at DESC;
 
 

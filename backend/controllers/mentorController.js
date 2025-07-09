@@ -1,4 +1,5 @@
 import { pool } from "../config/database.js";
+import { pool as db } from "../config/database.js";
 
 export async function listMentors(req, res) {
   try {
@@ -25,7 +26,7 @@ export async function getMentorshipRequests(req, res) {
       `SELECT mr.request_id, mr.status, mr.description, u.user_id, u.name, u.email, u.degree
        FROM mentorship_requests mr
        JOIN users u ON mr.mentee_id = u.user_id
-       WHERE mr.mentor_id = ?`,
+       WHERE mr.mentor_id = ? ORDER BY mr.created_at DESC`,
       [mentorId]
     );
     res.json(requests);
@@ -36,7 +37,7 @@ export async function getMentorshipRequests(req, res) {
   }
 }
 
-import { pool as db } from "../config/database.js";
+
 export async function requestMentorship(req, res) {
   try {
     const { mentorId, description } = req.body;
@@ -79,7 +80,7 @@ export async function getMenteeRequests(req, res) {
       `SELECT mr.request_id, mr.status, mr.description, u.user_id, u.name, u.email, u.degree
        FROM mentorship_requests mr
        JOIN users u ON mr.mentor_id = u.user_id
-       WHERE mr.mentee_id = ?`,
+       WHERE mr.mentee_id = ? ORDER BY created_at DESC`,
       [menteeId]
     );
     res.json(requests);

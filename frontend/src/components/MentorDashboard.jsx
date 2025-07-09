@@ -9,6 +9,7 @@ const MentorDashboard = () => {
   const [requests, setRequests] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [toggleRecent, setToggleRecent] = useState(true);
 
   useEffect(() => {
     const fetchRequests = async () => {
@@ -17,6 +18,7 @@ const MentorDashboard = () => {
       try {
         const res = await api.get("/mentors/requests");
         setRequests(res.data);
+        console.log(res.data)
       } catch (err) {
         setError("Failed to load requests");
       } finally {
@@ -24,12 +26,13 @@ const MentorDashboard = () => {
       }
     };
     fetchRequests();
-  }, []);
+  }, [toggleRecent]);
 
   const handleDecision = async (requestId, action) => {
     try {
       await api.patch(`/mentors/requests/${requestId}`, { action });
       setRequests((prev) => prev.filter((req) => req.request_id !== requestId));
+      setToggleRecent(!recentRequests);
     } catch {
       alert("Failed to update request");
     }
