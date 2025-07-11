@@ -1,4 +1,5 @@
 import { pool } from "../config/database.js";
+import bcrypt from "bcrypt";
 
 export async function getMentees() {
   const [rows] = await pool.query(
@@ -36,4 +37,39 @@ export async function deleteUserById(id, role) {
     id,
     role,
   ]);
+}
+
+export async function addMentee({ name, email, password, degree }) {
+  const password_hash = await bcrypt.hash(password, 10);
+  await pool.query(
+    `INSERT INTO users (name, email, password_hash, degree, role) VALUES (?, ?, ?, ?, 'Mentee')`,
+    [name, email, password_hash, degree]
+  );
+}
+
+export async function addMentor({ name, email, password, specialty }) {
+  const password_hash = await bcrypt.hash(password, 10);
+  await pool.query(
+    `INSERT INTO users (name, email, password_hash, degree, role) VALUES (?, ?, ?, ?, 'Mentor')`,
+    [name, email, password_hash, specialty]
+  );
+}
+
+export async function editMentee(id, { name, email, degree }) {
+  await pool.query(
+    `UPDATE users SET name = ?, email = ?, degree = ? WHERE user_id = ? AND role = 'Mentee'`,
+    [name, email, degree, id]
+  );
+}
+
+export async function editMentor(id, { name, email, specialty }) {
+  await pool.query(
+    `UPDATE users SET name = ?, email = ?, degree = ? WHERE user_id = ? AND role = 'Mentor'`,
+    [name, email, specialty, id]
+  );
+}
+
+export async function getMentorshipRequestsReport() {
+  const [rows] = await pool.query(`SELECT * FROM mentorship_requests`);
+  return rows;
 }
