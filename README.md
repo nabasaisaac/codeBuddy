@@ -107,15 +107,18 @@ Content-Type: application/json
 📬 Email notifications
 
 ## 👨‍💻 Contributing
-Fork the repo
+1. Fork the repo
 
-Create a feature branch (git checkout -b feature/my-feature)
+2. Create a feature branch (git checkout -b feature/my-feature)
 
-Commit your changes
+3. Commit your changes
 
-Push to the branch
+4. Push to the branch
 
-Open a Pull Request
+5. Open a Pull Request
+
+
+
 
 ##⚖️ License
 This project is licensed under the MIT License.
