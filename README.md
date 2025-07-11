@@ -1,34 +1,37 @@
+# 📗 CodeBuddy Backend — RESTful API for Peer Mentorship Platform
 
+This is the **backend API** for [CodeBuddy](https://github.com/your-frontend-repo), a peer-to-peer student mentorship platform that enables mentees and mentors to connect based on academic degrees and interests.
 
-
-# 📘 CodeBuddy — Peer-to-Peer Mentorship Platform
-
-CodeBuddy is a student mentorship web application that connects junior students (mentees) with experienced peers (mentors) based on their academic fields and interests. The platform streamlines mentorship requests, session management, and provides a personalized dashboard for both roles.
+Built using **Node.js** and **Express.js**, this server handles user authentication, mentorship request flows, role-based access control, and session persistence.
 
 ---
 
-## 🚀 Features
+## 🚀 Key Features
 
-- ✅ Role-based authentication for Mentors and Mentees  
-- ✅ Mentee dashboard with mentor suggestions based on degree (BSIT, BSCS, BSDS)  
-- ✅ Mentor dashboard to view, accept, or reject mentorship requests  
-- ✅ Real-time mentorship request tracking  
-- ✅ Persistent user sessions using `localStorage`  
-- ✅ Responsive UI built with Tailwind CSS  
-- ✅ Search functionality to filter mentors by field  
-- ✅ Logout functionality and protected routes  
+- ✅ Secure user registration & login (bcrypt password hashing)
+- ✅ Role-based access control (Mentee, Mentor, Admin)
+- ✅ Mentor suggestion endpoint filtered by degree
+- ✅ Mentorship request creation, update, and listing
+- ✅ Admin routes for managing users and generating reports
+- ✅ RESTful API with modular route handling
+- ✅ CORS enabled for frontend consumption
+- ✅ Middleware-based request validation and protection
 
 ---
 
 ## 🛠️ Tech Stack
 
-| Frontend               | Backend           | Others             |
-|------------------------|-------------------|--------------------|
-| React.js + React Router | Express.js (Node.js) | Axios (API calls) |
-| Tailwind CSS           | RESTful API       | localStorage (Auth) |
-| Context API (Auth)     | JSON (temporary DB) or MongoDB | UI Avatars API |
+| Tech/Library           | Purpose                                  |
+|------------------------|------------------------------------------|
+| **Node.js + Express**  | Server-side logic and routing            |
+| **MySQL** or **PostgreSQL** | Relational data storage (via SQL)     |
+| **bcryptjs**           | Password hashing                         |
+| **jsonwebtoken (JWT)** | User authentication and session tokens   |
+| **dotenv**             | Environment variable management          |
+| **cors**               | Cross-Origin Resource Sharing             |
+| **morgan** (optional)  | HTTP request logging (for dev/debug)     |
 
 ---
 
-## 📂 Folder Structure
+## 📁 Folder Structure
 
