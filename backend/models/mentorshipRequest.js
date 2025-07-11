@@ -10,16 +10,18 @@ export async function createMentorshipRequest({ mentee_id, mentor_id }) {
 
 export async function getRequestsByMentee(mentee_id) {
   const [rows] = await pool.query(
-    `SELECT * FROM mentorship_requests WHERE mentee_id = ?`,
+    `SELECT * FROM mentorship_requests WHERE mentee_id = ? ORDER BY created_at DESC`,
     [mentee_id]
   );
+  console.log(rows[0]);
   return rows;
 }
 
 export async function getRequestsByMentor(mentor_id) {
   const [rows] = await pool.query(
-    `SELECT * FROM mentorship_requests WHERE mentor_id = ?`,
+    `SELECT * FROM mentorship_requests WHERE mentor_id = ? ORDER BY created_at DESC`,
     [mentor_id]
   );
+  console.log(rows[0]);
   return rows;
 }
