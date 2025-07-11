@@ -1,4 +1,4 @@
-# 📗 CodeBuddy Backend 
+# CodeBuddy Backend 
 
 This is the **backend API** for [CodeBuddy](https://github.com/your-frontend-repo), a peer-to-peer student mentorship platform that enables mentees and mentors to connect based on academic degrees and interests.
 
@@ -117,10 +117,8 @@ Content-Type: application/json
 
 5. Open a Pull Request
 
+## License
 
-
-
-##⚖️ License
 This project is licensed under the MIT License.
 
 Thanks , have fun!
