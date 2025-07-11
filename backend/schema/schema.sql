@@ -14,23 +14,6 @@ CREATE TABLE IF NOT EXISTS users (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
-INSERT INTO users (
-    name, 
-    email, 
-    password_hash, 
-    degree, 
-    role
-) VALUES (
-    'Isaac Nabasa', 
-    'nabasaisaac16@gmail.com', 
-    '$2b$10$vl4NkboPFOf67PqxvSZgueexshvNB732qO7MZ008xCatH7CEdU8N.', 
-    'BSCS', 
-    'Admin'
-);
-
-SELECT * FROM users;
-SET FOREIGN_KEY_CHECKS = 1;
-DROP TABLE users;
 
 USE CODEBUDDY;
 select * from users;
@@ -46,8 +29,6 @@ CREATE TABLE IF NOT EXISTS mentorship_requests (
     FOREIGN KEY (mentor_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
-SET FOREIGN_KEY_CHECKS = 0;
-DROP TABLE mentorship_requests;
 use codeBuddy;
 SELECT * FROM mentorship_requests WHERE mentor_id = ? order BY created_at ASC
 DROP TABLE mentorship_requests;
@@ -55,3 +36,5 @@ DROP TABLE mentorship_requests;
 SELECT * FROM mentorship_requests WHERE mentor_id=5 ORDER BY created_at DESC;
 
 
+USE CODEBUDDY;
+SELECT * FROM users;
