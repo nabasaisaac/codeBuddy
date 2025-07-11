@@ -6,6 +6,7 @@ import { PORT } from "./config/index.js";
 import authRoutes from "./routes/auth.js";
 import mentorRoutes from "./routes/mentor.js";
 import userRoutes from "./routes/user.js";
+import adminRoutes from "./routes/admin.js";
 
 // Load environment variables
 dotenv.config();
@@ -19,6 +20,7 @@ app.use(cookieParser());
 app.use("/api/auth", authRoutes);
 app.use("/api/mentors", mentorRoutes);
 app.use("/api/user", userRoutes);
+app.use("/api/admin", adminRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
