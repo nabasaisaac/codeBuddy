@@ -14,23 +14,6 @@ CREATE TABLE IF NOT EXISTS users (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
-INSERT INTO users (
-    name, 
-    email, 
-    password_hash, 
-    degree, 
-    role
-) VALUES (
-    'Isaac Nabasa', 
-    'nabasaisaac16@gmail.com', 
-    '$2b$10$vl4NkboPFOf67PqxvSZgueexshvNB732qO7MZ008xCatH7CEdU8N.', 
-    'BSCS', 
-    'Admin'
-);
-
-SELECT * FROM users;
-SET FOREIGN_KEY_CHECKS = 1;
-DROP TABLE users;
 
 USE CODEBUDDY;
 select * from users;
@@ -46,8 +29,6 @@ CREATE TABLE IF NOT EXISTS mentorship_requests (
     FOREIGN KEY (mentor_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
-SET FOREIGN_KEY_CHECKS = 0;
-DROP TABLE mentorship_requests;
 use codeBuddy;
 SELECT * FROM mentorship_requests WHERE mentor_id = ? order BY created_at ASC
 DROP TABLE mentorship_requests;
@@ -79,3 +60,6 @@ VALUES
 ('mukama atom', 'mukama55@gmail.com', '$2b$10$/jZYItTjgfFRtaCWZRAlWeOz6vfDMdgnG.io3S/12bcBWgYLxQW9u', 'BSDS', 'Mentee'),
 ('Akankwasa Tom', 'atomixtoms@gmail.com', '$2b$10$vVkffxfV2tnC6oq5.lrKAuxgTWhaF4JNHiE0uNGKUbwC0doQpV/Ly', 'BSIT', 'Mentor'),
 ('joseph mukama', 'josephmukama6@gmail.com', '$2b$10$37D.Gt2DJD65OvCYC0B.luCnzd/e5AJIPHmhaNvSVYZlbIXVViGU6', 'BSIT', 'Mentee');
+
+USE CODEBUDDY;
+SELECT * FROM users;
