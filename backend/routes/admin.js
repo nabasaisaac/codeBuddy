@@ -13,6 +13,7 @@ import {
 } from "../controllers/adminController.js";
 const router = express.Router();
 
+//Routes
 router.get("/mentees", authenticateToken, getMentees);
 router.get("/mentors", authenticateToken, getMentors);
 router.get("/report", authenticateToken, getAdminReport);
