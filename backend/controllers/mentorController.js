@@ -4,7 +4,7 @@ import { pool as db } from "../config/database.js";
 export async function listMentors(req, res) {
   try {
     const { degree } = req.query;
-    let query = `SELECT user_id, name, email, degree FROM users WHERE role = 'Mentor'`;
+    let query = `SELECT user_id, name, email, degree FROM users WHERE role = 'Mentor'`;// users with role 'Mentor'
     let params = [];
     if (degree) {
       query += ` AND degree = ?`;
