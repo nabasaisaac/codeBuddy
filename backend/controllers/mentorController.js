@@ -57,7 +57,7 @@ export async function requestMentorship(req, res) {
 export async function updateMentorshipRequest(req, res) {
   try {
     const { requestId } = req.params;
-    const { action } = req.body; // 'accepted' or 'rejected'
+    const { action } = req.body; // 'Accepted' or 'Rejected'
     if (!["accepted", "rejected"].includes(action)) {
       return res.status(400).json({ message: "Invalid action" });
     }
