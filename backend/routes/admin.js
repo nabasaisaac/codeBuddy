@@ -11,9 +11,11 @@ import {
   editMentor,
   getMentorshipRequestsReport,
 } from "../controllers/adminController.js";
+
+
 const router = express.Router();
 
-// The Routes
+// CodeBuddy Routes
 router.get("/mentees", authenticateToken, getMentees);
 router.get("/mentors", authenticateToken, getMentors);
 router.get("/report", authenticateToken, getAdminReport);
@@ -22,6 +24,7 @@ router.post("/mentee", authenticateToken, addMentee);
 router.post("/mentor", authenticateToken, addMentor);
 router.put("/mentee/:id", authenticateToken, editMentee);
 router.put("/mentor/:id", authenticateToken, editMentor);
+router.post("/mentees", authenticateToken, addMentee);
 router.get(
   "/mentorship-requests-report",
   authenticateToken,
