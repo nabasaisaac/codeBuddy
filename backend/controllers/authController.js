@@ -11,14 +11,14 @@ export async function signup(req, res) {
     if (await findUserByEmail(email)) {
       return res.status(409).json({ message: "Email already registered" });
     }
-    console.log(req.body)
     const user_id = await createUser({ name, email, password, degree, role });
+    const user = await findUserById(user_id); // Fetch full user details
     const token = jwt.sign({ id: user_id, email, role, degree }, JWT_SECRET, {
       expiresIn: "1d",
     });
-    res.json({ user: { id: user_id, name, email, degree, role }, token });
+    res.json({ user: { id: user_id, name, email, degree, role: user.role }, token });
   } catch (err) {
-    console.log(err.message);
+    console.error('Signup error:', err.message);
     res.status(500).json({ message: "Signup failed", error: err.message });
   }
 }
@@ -26,6 +26,9 @@ export async function signup(req, res) {
 export async function login(req, res) {
   try {
     const { email, password } = req.body;
+    if (!email || !password) {
+      return res.status(400).json({ message: "Email and password are required" });
+    }
     const user = await validateUser(email, password);
     if (!user) {
       return res.status(401).json({ message: "Invalid credentials" });
@@ -51,10 +54,12 @@ export async function login(req, res) {
       token,
     });
   } catch (err) {
+    console.error('Login error:', err.message);
     res.status(500).json({ message: "Login failed", error: err.message });
   }
 }
 
 export function logout(req, res) {
-  res.json({ message: "Logged out" });
+  // Note: Since JWT is stateless, logout is handled client-side by removing token
+  res.json({ message: "Logged out successfully" });
 }
