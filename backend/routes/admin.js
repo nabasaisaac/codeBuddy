@@ -10,8 +10,10 @@ import {
   editMentee,
   editMentor,
   getMentorshipRequestsReport,
-} from "../controllers/adminController.js";
-
+  getAdminProfile,
+  updateAdminProfile,
+  changeAdminPassword,
+} from "../controllers/adminController.js"
 
 const router = express.Router();
 
@@ -25,10 +27,9 @@ router.post("/mentor", authenticateToken, addMentor);
 router.put("/mentee/:id", authenticateToken, editMentee);
 router.put("/mentor/:id", authenticateToken, editMentor);
 router.post("/mentees", authenticateToken, addMentee);
-router.get(
-  "/mentorship-requests-report",
-  authenticateToken,
-  getMentorshipRequestsReport
-);
+router.get("/mentorship-requests-report",authenticateToken,getMentorshipRequestsReport);
+router.get("/profile", authenticateToken, getAdminProfile);
+router.put("/profile", authenticateToken, updateAdminProfile);
+router.put("/change-password", authenticateToken, changeAdminPassword);
 
 export default router;
