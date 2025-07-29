@@ -12,7 +12,8 @@ export async function getMentees() {
 // Fetch Mentors
 export async function getMentors() {
   const [rows] = await pool.query(
-    `SELECT user_id as id, name, email, degree FROM users WHERE role = 'Mentor'`
+
+    `SELECT user_id, name, email, degree FROM users WHERE role = 'Mentor'`
   );
   return rows;
 }
@@ -53,7 +54,6 @@ export async function addMentee({ name, email, password, degree }) {
   );
 }
 
-// Add Mentor
 export async function addMentor({ name, email, password, degree }) {
   const password_hash = await bcrypt.hash(password, 10);
   await pool.query(
@@ -70,7 +70,6 @@ export async function editMentee(id, { name, email, degree }) {
   );
 }
 
-// Edit Mentor
 export async function editMentor(id, { name, email, degree }) {
   await pool.query(
     `UPDATE users SET name = ?, email = ?, degree = ? WHERE user_id = ? AND role = 'Mentor'`,
@@ -78,8 +77,23 @@ export async function editMentor(id, { name, email, degree }) {
   );
 }
 
-// Report on Mentorship Requests
-export async function getMentorshipRequestsReport() {
-  const [rows] = await pool.query(`SELECT * FROM mentorship_requests`);
-  return rows;
+export async function getMentorshipRequestsReport(){
+  try {
+    const [rows] = await pool.query(
+      `SELECT 
+        mr.request_id AS id,
+        mentee.name AS mentee_name,
+        mentor.name AS mentor_name,
+        mr.status,
+        mr.created_at
+      FROM mentorship_requests mr
+      LEFT JOIN users mentee ON mr.mentee_id = mentee.user_id
+      LEFT JOIN users mentor ON mr.mentor_id = mentor.user_id
+      ORDER BY mr.created_at DESC`
+    );
+    return rows;
+  } catch (error) {
+    console.error("Error fetching mentorship requests report:", error);
+    throw new Error("Database query failed");
+  }
 }

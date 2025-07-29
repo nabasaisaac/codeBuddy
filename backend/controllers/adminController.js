@@ -143,14 +143,12 @@ export async function editMentor(req, res) {
   }
 }
 
-export async function getMentorshipRequestsReport(req, res) {
+export async function getMentorshipRequestsReport(req, res){
   try {
-    const report = await adminModel.getMentorshipRequestsReport();
-    res.json(report);
-  } catch (err) {
-    res.status(500).json({
-      message: "Failed to fetch mentorship requests report",
-      error: err.message,
-    });
+    const requests = await adminModel.getMentorshipRequestsReport();
+    res.status(200).json(requests);
+  } catch (error) {
+    console.error("Controller error in getMentorshipRequestsReport:", error);
+    res.status(500).json({ message: "Failed to fetch mentorship requests report" });
   }
 }
