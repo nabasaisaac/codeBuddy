@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS mentorship_requests (
     FOREIGN KEY (mentee_id) REFERENCES users(user_id) ON DELETE CASCADE,
     FOREIGN KEY (mentor_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
-
+SELECT * FROM users;
 use codeBuddy;
 SELECT * FROM mentorship_requests WHERE mentor_id = ? order BY created_at ASC
 DROP TABLE mentorship_requests;
@@ -63,3 +63,12 @@ VALUES
 
 USE CODEBUDDY;
 SELECT * FROM users;
+
+SELECT * FROM users;
+INSERT INTO users (name, email, password_hash, degree, role)
+VALUES 
+('NABASA ISAAC', 'nabasaisaac16@gmail.com', '$2y$10$CeOLP4TcpORcqYp2zYcNa.EGl9GhLZWHMYSSsAy9ar.2jslfU9F3a', 'BSIT', 'Admin');
+
+UPDATE USERS SET password_hash='$2b$10$CeOLP4TcpORcqYp2zYcNa.EGl9GhLZWHMYSSsAy9ar.2jslfU9F3a' WHERE role='Admin';
+
+
