@@ -3,49 +3,41 @@ import bcrypt from "bcrypt"
 
 
 
-// Getting current admin profile
+// Get current admin profile
 export const getAdminProfile = async (req, res) => {
   try {
-    const admin = await Admin.findById(req.user.id).select("name email");
+    const admin = await adminModel.getAdminById(req.user.id);
     if (!admin) return res.status(404).json({ message: "Admin not found" });
-
     res.json(admin);
   } catch (err) {
     res.status(500).json({ message: "Server error" });
   }
 };
 
-// Updating the admin profile info
+// Update admin profile info
 export const updateAdminProfile = async (req, res) => {
   try {
     const { name, email } = req.body;
-
-    const admin = await Admin.findById(req.user.id);
-    if (!admin) return res.status(404).json({ message: "Admin not found" });
-
-    admin.name = name || admin.name;
-    admin.email = email || admin.email;
-    await admin.save();
-
+    await adminModel.updateAdminProfile(req.user.id, { name, email });
     res.json({ message: "Profile updated successfully" });
   } catch (err) {
     res.status(500).json({ message: "Server error" });
   }
 };
 
-// Updating the admin password
+// Change password
 export const changeAdminPassword = async (req, res) => {
   const { current, new: newPassword } = req.body;
-
   try {
-    const admin = await Admin.findById(req.user.id);
-    if (!admin) return res.status(404).json({ message: "Admin not found" });
+    const user = await adminModel.getAdminById(req.user.id);
+    if (!user) return res.status(404).json({ message: "Admin not found" });
 
-    const isMatch = await bcrypt.compare(current, admin.password);
-    if (!isMatch) return res.status(400).json({ message: "Incorrect current password" });
+    const isMatch = await bcrypt.compare(current, user.password_hash);
+    if (!isMatch)
+      return res.status(400).json({ message: "Incorrect current password" });
 
-    admin.password = await bcrypt.hash(newPassword, 10);
-    await admin.save();
+    const passwordHash = await bcrypt.hash(newPassword, 10);
+    await adminModel.updateAdminPassword(req.user.id, passwordHash);
 
     res.json({ message: "Password updated successfully" });
   } catch (err) {

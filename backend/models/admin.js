@@ -97,3 +97,27 @@ export async function getMentorshipRequestsReport(){
     throw new Error("Database query failed");
   }
 }
+
+///
+export async function getAdminById(id) {
+  const [[user]] = await pool.query(
+    `SELECT user_id as id, name, email, password_hash FROM users WHERE user_id = ? AND role = 'Admin'`,
+    [id]
+  );
+  return user;
+}
+
+export async function updateAdminProfile(id, { name, email }) {
+  await pool.query(
+    `UPDATE users SET name = ?, email = ? WHERE user_id = ? AND role = 'Admin'`,
+    [name, email, id]
+  );
+}
+
+export async function updateAdminPassword(id, newPasswordHash) {
+  await pool.query(
+    `UPDATE users SET password_hash = ? WHERE user_id = ? AND role = 'Admin'`,
+    [newPasswordHash, id]
+  );
+}
+
