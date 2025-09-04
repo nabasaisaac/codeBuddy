@@ -3,6 +3,7 @@ CREATE DATABASE IF NOT EXISTS codeBuddy;
 drop DATABASE CODEbUDDY;
 USE codeBuddy;
 
+
 CREATE TABLE IF NOT EXISTS users (
     user_id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(50) NOT NULL,
@@ -28,7 +29,7 @@ CREATE TABLE IF NOT EXISTS mentorship_requests (
     FOREIGN KEY (mentee_id) REFERENCES users(user_id) ON DELETE CASCADE,
     FOREIGN KEY (mentor_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
-SELECT * FROM users;
+SELECT * FROM mentorship_requests;
 use codeBuddy;
 SELECT * FROM mentorship_requests WHERE mentor_id = ? order BY created_at ASC
 DROP TABLE mentorship_requests;
