@@ -37,7 +37,7 @@ export async function getAdminReport() {
   };
 }
 
-// Delete user by ID + Role (safer)
+// Delete user by ID + Role 
 export async function deleteUserById(id, role) {
   await pool.query(
     `DELETE FROM users WHERE user_id = ? AND role = ?`,
