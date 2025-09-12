@@ -18,7 +18,7 @@ export async function getMentors() {
   return rows;
 }
 
-// 
+// Admin Dashboard Stats
 export async function getAdminReport() {
   const [[mentees]] = await pool.query(
     `SELECT COUNT(*) as totalMentees FROM users WHERE role = 'Mentee'`
