@@ -9,7 +9,7 @@ export async function getMentees() {
   return rows;
 }
 
-// Fetch Mentors
+// fetching
 export async function getMentors() {
   const [rows] = await pool.query(
 
